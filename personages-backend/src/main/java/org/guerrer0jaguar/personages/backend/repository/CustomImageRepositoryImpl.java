@@ -43,7 +43,7 @@ public class CustomImageRepositoryImpl implements CustomImageRepository {
 			String base64Image = img.getContent().split(",")[1];
 			byte[] imageBytes = Base64.getDecoder().decode(base64Image);
 			Files.write(filePath, imageBytes,StandardOpenOption.CREATE);
-			img.setPath(filePath.toAbsolutePath().toString());
+			img.setUrl(filePath.toAbsolutePath().toString());
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

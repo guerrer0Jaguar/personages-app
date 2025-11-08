@@ -16,7 +16,7 @@ public class Image {
 	
 	private String name;
 	
-	private String path;
+	private String url;
 	
 	@Transient
 	private String content;
