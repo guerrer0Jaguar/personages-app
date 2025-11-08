@@ -1,5 +1,6 @@
 package org.guerrer0jaguar.personages.backend.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.guerrer0jaguar.personages.backend.model.Personage;
@@ -10,4 +11,5 @@ public interface PersonageRepository extends PagingAndSortingRepository<Personag
 JpaRepository<Personage, Long>{
 
 	List<Personage> findByNameContainingIgnoreCase(String name);
+	List<Personage> findByCreationDateBetween(LocalDateTime init, LocalDateTime end);
 }

@@ -1,7 +1,10 @@
 package org.guerrer0jaguar.personages.backend.controller;
 
-import java.sql.Timestamp;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 import org.guerrer0jaguar.personages.backend.ResourceNotFound;
@@ -20,8 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PersonageController {
 	
+	private static final DateTimeFormatter DATE_CREATION_INPUT_FORMAT =  DateTimeFormatter.ISO_LOCAL_DATE;
+	
 	private final PersonageRepository repository;
-	private final ImageRepository imageRepo;
+	private final ImageRepository imageRepo;	
 
 	public PersonageController(PersonageRepository repository,
 			ImageRepository imageRepo) {
@@ -31,8 +36,8 @@ public class PersonageController {
 	
 	@PostMapping("/personage")
 	Personage newPersonage(@RequestBody Personage newPersonage) {
-		imageRepo.save(newPersonage.getImage());
-		newPersonage.setDateCreation(new Timestamp(new Date().getTime()));
+		imageRepo.save(newPersonage.getImage());		
+		newPersonage.setCreationDate(LocalDateTime.now());
 		return repository.save(newPersonage);
 	}
 	
@@ -62,15 +67,38 @@ public class PersonageController {
 	}
 	
 	@GetMapping("/personage")
-	List<Personage> findByName(@RequestParam(value = "name", defaultValue = "") String name ) {
+	List<Personage> find(
+			@RequestParam(value = "name", defaultValue = "") String name, 
+			@RequestParam(value = "initDate", defaultValue = "") String initDate,
+			@RequestParam(value = "endDate", defaultValue = "") String endDate) {		
 		
-		if ( name.isBlank()) {
-			return repository.findAll();
+		if ( !name.isBlank()) {
+			return repository.findByNameContainingIgnoreCase(name);
 		}
 		
-		return repository.findByNameContainingIgnoreCase(name);
+		if ( !initDate.isBlank() && !endDate.isBlank()) {
+			return findByDateCreation(initDate, endDate);
+		}
+		
+		return repository.findAll();
 	}
-
+		
+	private List<Personage> findByDateCreation(String initParam, 
+			String endParam) {
+		
+		LocalDateTime init = null;
+		LocalDateTime end = null;
+		
+		try {
+			init = LocalDate.parse(initParam, DATE_CREATION_INPUT_FORMAT).atStartOfDay();
+			end = LocalDate.parse(endParam, DATE_CREATION_INPUT_FORMAT).atTime(LocalTime.MAX);
+		} catch (DateTimeParseException e) {
+			throw new IllegalArgumentException("The format date must be yyyy-MM-dd", e);
+		}
+		
+		return repository.findByCreationDateBetween(init, end);		
+	}
+	
 	@DeleteMapping("/personage/{id}")
 	void delete(@PathVariable Long id) {
 		repository.deleteById(id);

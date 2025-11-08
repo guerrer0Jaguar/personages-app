@@ -1,7 +1,5 @@
 package org.guerrer0jaguar.personages.backend.model;
 
-import java.sql.Timestamp;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -26,7 +24,7 @@ public final class Personage {
 	
 	private String description;
 	
-	private Timestamp dateCreation;
+	private java.time.LocalDateTime creationDate;
 	
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "media_id", referencedColumnName = "id")
