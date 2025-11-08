@@ -73,7 +73,7 @@ public class PersonageController {
 			@RequestParam(value = "endDate", defaultValue = "") String endDate) {		
 		
 		if ( !name.isBlank()) {
-			return repository.findByNameContainingIgnoreCase(name);
+			return repository.findByNameContainingIgnoreCaseOrderByNameAsc(name);
 		}
 		
 		if ( !initDate.isBlank() && !endDate.isBlank()) {
@@ -96,7 +96,7 @@ public class PersonageController {
 			throw new IllegalArgumentException("The format date must be yyyy-MM-dd", e);
 		}
 		
-		return repository.findByCreationDateBetween(init, end);		
+		return repository.findByCreationDateBetweenOrderByCreationDateAsc(init, end);		
 	}
 	
 	@DeleteMapping("/personage/{id}")

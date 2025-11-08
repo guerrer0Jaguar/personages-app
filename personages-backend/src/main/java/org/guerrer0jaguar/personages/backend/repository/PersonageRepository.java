@@ -10,6 +10,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface PersonageRepository extends PagingAndSortingRepository<Personage, Long>,
 JpaRepository<Personage, Long>{
 
-	List<Personage> findByNameContainingIgnoreCase(String name);
-	List<Personage> findByCreationDateBetween(LocalDateTime init, LocalDateTime end);
+	List<Personage> findByNameContainingIgnoreCaseOrderByNameAsc(String name);
+	List<Personage> findByCreationDateBetweenOrderByCreationDateAsc(LocalDateTime init, LocalDateTime end);
 }
