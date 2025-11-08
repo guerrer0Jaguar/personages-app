@@ -1,0 +1,24 @@
+package org.guerrer0jaguar.personages.backend;
+
+import org.guerrer0jaguar.personages.backend.model.MediaType;
+import org.guerrer0jaguar.personages.backend.repository.MediaTypeRepository;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Configuration
+@Slf4j
+public class Config {
+
+	@Bean
+	CommandLineRunner initDatabase(MediaTypeRepository repository) {
+		return args -> {
+			log.info("Loading MediaType catalog...");
+			repository.save(new MediaType(1L, "Película"));
+			repository.save(new MediaType(2L, "Serie"));
+			log.info("Default catalog of Media Type loaded");
+		};		
+	}	
+}

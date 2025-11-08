@@ -14,16 +14,20 @@ import lombok.ToString;
 
 @Entity
 @Data
-@EqualsAndHashCode
-@ToString
 public class Media {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
 	private String name;	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	
+	@OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	@JoinColumn(name = "image_id", referencedColumnName = "id")
 	private Image image;
+	
+	@OneToOne(fetch = FetchType.EAGER )
+	@JoinColumn(name = "media_type_id", referencedColumnName = "id")
+	private MediaType mediaType;
 	
 	Media(){
 		
