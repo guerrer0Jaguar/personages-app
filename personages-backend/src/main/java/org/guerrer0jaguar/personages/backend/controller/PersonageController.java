@@ -8,6 +8,7 @@ import org.guerrer0jaguar.personages.backend.ResourceNotFound;
 import org.guerrer0jaguar.personages.backend.model.Personage;
 import org.guerrer0jaguar.personages.backend.repository.ImageRepository;
 import org.guerrer0jaguar.personages.backend.repository.PersonageRepository;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,7 +37,7 @@ public class PersonageController {
 	}
 	
 	@PutMapping("/personage/{id}")
-	Personage updatePersonage(@RequestBody Personage updated, @PathVariable Long id) {
+	Personage update(@RequestBody Personage updated, @PathVariable Long id) {
 		return repository.findById(id)
 				.map(personage -> copyAndSavePersonage(updated, personage))
 				.orElseGet(()-> {
@@ -69,6 +70,9 @@ public class PersonageController {
 		
 		return repository.findByNameContainingIgnoreCase(name);
 	}
-	
 
+	@DeleteMapping("/personage/{id}")
+	void delete(@PathVariable Long id) {
+		repository.deleteById(id);
+	}
 }
