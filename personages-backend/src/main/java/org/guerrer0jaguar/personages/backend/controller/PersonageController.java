@@ -7,10 +7,10 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
-import org.guerrer0jaguar.personages.backend.ResourceNotFound;
 import org.guerrer0jaguar.personages.backend.model.Personage;
 import org.guerrer0jaguar.personages.backend.repository.ImageRepository;
 import org.guerrer0jaguar.personages.backend.repository.PersonageRepository;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -63,7 +63,7 @@ public class PersonageController {
 	@GetMapping("/personage/{id}")
 	Personage findById(@PathVariable Long id) {
 		return repository.findById(id)
-				.orElseThrow(() -> new ResourceNotFound("The personage with id:" + id + " doesnt' exits"));
+				.orElseThrow(() -> new ResourceNotFoundException("The personage with id:" + id + " doesnt' exits"));
 	}
 	
 	@GetMapping("/personage")
