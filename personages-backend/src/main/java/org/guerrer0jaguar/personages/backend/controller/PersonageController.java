@@ -11,6 +11,7 @@ import org.guerrer0jaguar.personages.backend.repository.PersonageRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +26,32 @@ public class PersonageController {
 			ImageRepository imageRepo) {
 		this.repository = repository;
 		this.imageRepo = imageRepo;
+	}
+	
+	@PostMapping("/personage")
+	Personage newPersonage(@RequestBody Personage newPersonage) {
+		imageRepo.save(newPersonage.getImage());
+		newPersonage.setDateCreation(new Timestamp(new Date().getTime()));
+		return repository.save(newPersonage);
+	}
+	
+	@PutMapping("/personage/{id}")
+	Personage updatePersonage(@RequestBody Personage updated, @PathVariable Long id) {
+		return repository.findById(id)
+				.map(personage -> copyAndSavePersonage(updated, personage))
+				.orElseGet(()-> {
+					return newPersonage(updated);					
+				});
+	}
+
+	private Personage copyAndSavePersonage(Personage updated, Personage personage) {
+		personage.setDescription(updated.getDescription());
+		personage.setName(updated.getName());
+		personage.setRol(updated.getRol());
+		personage.setMedia(updated.getMedia());
+		personage.setImage(updated.getImage());
+		
+		return newPersonage(personage);
 	}
 	
 	@GetMapping("/personage/{id}")
@@ -43,10 +70,5 @@ public class PersonageController {
 		return repository.findByNameContainingIgnoreCase(name);
 	}
 	
-	@PostMapping("/personage")
-	Personage newPersonage(@RequestBody Personage newPersonage) {
-		imageRepo.save(newPersonage.getImage());
-		newPersonage.setDateCreation(new Timestamp(new Date().getTime()));
-		return repository.save(newPersonage);
-	}
+
 }

@@ -25,6 +25,11 @@ public class CustomImageRepositoryImpl implements CustomImageRepository {
 
 	@Override
 	public <S extends Image> S save(S img) {
+		
+		if ( img == null) {
+			return img;
+		}
+		
 		saveOnFileSystem(img);
 		em.persist(img);
 		return img;
