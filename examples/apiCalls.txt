@@ -1,0 +1,23 @@
+https://www.base64-image.de/
+
+
+
+curl -X POST http://localhost:8080/media -H "Content-Type:application/json" -d @media1-POST.json
+curl -X POST http://localhost:8080/personage -H "Content-Type:application/json" -d @personage1-POST.json
+curl -X POST http://localhost:8080/personage -H "Content-Type:application/json" -d @personage2-POST.json
+curl -X POST http://localhost:8080/personage -H "Content-Type:application/json" -d @personage3-POST.json
+
+curl -v http://localhost:8080/personage/1
+curl -X PUT http://localhost:8080/personage/1 -H "Content-Type:application/json" -d @personage1-PUT.json
+curl -v http://localhost:8080/personage/1
+curl -v http://localhost:8080/personage?name=Black%20widow
+curl -v "http://localhost:8080/personage?initDate=2025-11-08&endDate=2025-11-09"
+curl -X DELETE http://localhost:8080/personage/3
+curl -v http://localhost:8080/personage/3
+
+
+curl -X POST http://localhost:8080/personage -H "Content-Type:application/json" -d personage4-POST-must-fail.json
+
+curl -v http://localhost:8080/media
+curl -v http://localhost:8080/personage
+
