@@ -6,5 +6,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface ImageRepository extends JpaRepository<Image, Long>, 
 	PagingAndSortingRepository<Image,Long>,
-	CustomImageRepository{
+	CustomImageRepository<Image>{
 }

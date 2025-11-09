@@ -15,7 +15,7 @@ import org.springframework.data.jpa.repository.JpaContext;
 import jakarta.persistence.EntityManager;
 
 
-public class CustomImageRepositoryImpl implements CustomImageRepository {
+public class CustomImageRepositoryImpl<T> implements CustomImageRepository<T> {
 
 	private final EntityManager em;
 	private final Path baseFolder;
@@ -31,20 +31,22 @@ public class CustomImageRepositoryImpl implements CustomImageRepository {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public <S extends Image> S save(S img) {
-		
+	public <S extends T> S save(S ent) {
+		Image img = (Image) ent; 
 		if ( img == null) {
-			return img;
+			return (S)img;
 		}
 		
 		saveOnFileSystem(img);		
 		em.persist(img);
 		img.setContent("");
-		return img;
+		
+		return (S)img;
 	}
 
-	private <S extends Image> void saveOnFileSystem(S img){
+	private void saveOnFileSystem(Image img){
 		
 		if(img.getName() == null || img.getContent() == null) {
 			return;
