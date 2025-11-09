@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 public class Config {
 
 	private String pathToSaveImages = "tmp";
+	/*
 	@Bean
 	CommandLineRunner initDatabase(MediaTypeRepository repository) {
 		return args -> {
@@ -28,4 +29,5 @@ public class Config {
 			log.info("Default catalog of Media Type loaded");
 		};		
 	}	
+	*/
 }
