@@ -28,8 +28,6 @@ spring.datasource.password=somePassword
 
 ## Documentation
 
-[Documentation](https://linktodocumentation)
-
 La documentación relacionada esta en el folder "docs".
 ## Features
 
@@ -244,6 +242,7 @@ Salida
 ```
 
 CONSULTA DE PERSONAJES POR NOMBRE
+
 Se invoca el endpoint de "/personage" con el parámetro de "name=algunPersonaje". El ejemplo es el siguiente, notése que el espacio entre palabras tiene que codificarse:
 ```shell
 curl http://localhost:8080/personage?name=Black%20widow
@@ -283,6 +282,7 @@ Salida del servicio:
 También se podría buscar con "name=black", o "name=widow" y devolvería el mismo resultado.
 
 CONSULTA DE PERSONAJES POR FECHA DE CREACIÓN.
+
 Se invoca el mismo endpoint de la consulta por nombre, sólo que los parámetros son "initDate" (fecha de inicio) y endDate (fecha fin) con el formato de yyyy-MM-dd. Ejemplo:
 ```shell
 curl "http://localhost:8080/personage?initDate=2025-11-08&endDate=2025-11-09"
@@ -370,6 +370,7 @@ Salida del servicio:
 ```
 
 BORRADO DE PERSONAJES
+
 Se invoca el servicio "/personage/{id}" con el método DELETE y pasando el id del personaje dentro de la ruta. Ejemplo:
 ```shell
 curl -X DELETE http://localhost:8080/personage/3
@@ -388,6 +389,7 @@ Obtendremos el siguiente mensaje:
 ```
 
 CONSULTA DE PELÍCULAS O SERIES.
+
 Para obtener un listado de las películas o series guardadas, se invoca el 
 siguiente servicio (sin parámetros):
 ```shell
