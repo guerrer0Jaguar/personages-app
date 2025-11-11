@@ -40,7 +40,7 @@ La documentación relacionada esta en el folder "docs".
 ## Usage/Examples
 Una vez configurado el proyecto y navegando al folder de "personages-backend", se puede ejecutar el proyecto con el siguiente comando:
 ```shell
-/mvnw spring-boot:run
+./mvnw spring-boot:run
 ```
 El arranque es más o menos el siguiente (por default arranca en el puerto 8080):
 ```shell
